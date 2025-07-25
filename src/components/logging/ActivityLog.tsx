@@ -27,9 +27,24 @@ export function ActivityLog({ profile, logEntries, onAddEntry, onDeleteEntry }: 
       return;
     }
     
-    const start = new Date(`1970-01-01T${startTime}`);
-    const end = new Date(`1970-01-01T${endTime}`);
-    const duration = Math.round((end.getTime() - start.getTime()) / (1000 * 60));
+    // Parse time strings (HH:MM format) into minutes since midnight
+    const parseTimeToMinutes = (timeStr: string): number => {
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      return hours * 60 + minutes;
+    };
+    
+    const startMinutes = parseTimeToMinutes(startTime);
+    const endMinutes = parseTimeToMinutes(endTime);
+    
+    // Calculate duration, handling cases where end time is next day
+    let duration: number;
+    if (endMinutes >= startMinutes) {
+      // Same day
+      duration = endMinutes - startMinutes;
+    } else {
+      // End time is next day (crosses midnight)
+      duration = (24 * 60 - startMinutes) + endMinutes;
+    }
     
     if (duration <= 0) {
       alert('End time must be after start time.');
