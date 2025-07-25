@@ -7,6 +7,8 @@ import { Header } from './components/layout/Header';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { ActivityLog } from './components/logging/ActivityLog';
 import { DailyBriefing } from './components/modals/DailyBriefing';
+import { Goals } from './components/Goals';
+import { Analytics } from './components/Analytics';
 import { Profile, Plan, Task, Log, LogEntry, Streak } from './types';
 import { calculateCompositeScore, calculatePoints } from './utils/calculations';
 
@@ -249,6 +251,18 @@ function App() {
               >
                 Open Daily Briefing
               </button>
+            </div>
+          )}
+
+          {currentView === 'goals' && (
+            <div className="p-6">
+              <Goals />
+            </div>
+          )}
+
+          {currentView === 'analytics' && (
+            <div className="p-6">
+              <Analytics />
             </div>
           )}
         </main>

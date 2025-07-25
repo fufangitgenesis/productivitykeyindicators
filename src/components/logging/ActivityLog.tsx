@@ -22,13 +22,19 @@ export function ActivityLog({ profile, logEntries, onAddEntry, onDeleteEntry }: 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!startTime || !endTime || !description.trim()) return;
+    if (!startTime || !endTime || !description.trim()) {
+      alert('Please fill in all fields (Start Time, End Time, and Description).');
+      return;
+    }
     
     const start = new Date(`1970-01-01T${startTime}`);
     const end = new Date(`1970-01-01T${endTime}`);
     const duration = Math.round((end.getTime() - start.getTime()) / (1000 * 60));
     
-    if (duration <= 0) return;
+    if (duration <= 0) {
+      alert('End time must be after start time.');
+      return;
+    }
     
     const entry: Omit<LogEntry, 'id' | 'points'> = {
       startTime,
