@@ -7,6 +7,7 @@ import { Header } from './components/layout/Header';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { ActivityLog } from './components/logging/ActivityLog';
 import { DailyBriefing } from './components/modals/DailyBriefing';
+import { DailyPlan } from './components/planning/DailyPlan';
 import { Goals } from './components/Goals';
 import { Analytics } from './components/Analytics';
 import { Profile, Plan, Task, Log, LogEntry, Streak } from './types';
@@ -244,14 +245,13 @@ function App() {
           )}
 
           {currentView === 'plan' && (
-            <div className="p-6">
-              <button
-                onClick={() => setShowDailyBriefing(true)}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Open Daily Briefing
-              </button>
-            </div>
+            <DailyPlan
+              profile={currentProfile}
+              plan={plan}
+              tasks={tasks}
+              logEntries={logEntries}
+              onOpenBriefing={() => setShowDailyBriefing(true)}
+            />
           )}
 
           {currentView === 'goals' && (
