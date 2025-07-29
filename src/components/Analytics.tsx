@@ -46,10 +46,15 @@ export function Analytics() {
 
       for (const date of dates) {
         try {
-          // Load log entries
+// Load log entries
           const logData = await db.get<{ entries: LogEntry[] }>('logs', [currentProfile.id, date]);
           if (logData?.entries) {
-            allLogEntries.push(...logData.entries);
+            // Add the date to each entry before adding it to the main list
+            const entriesWithDate = logData.entries.map(entry => ({
+              ...entry,
+              date: date 
+            }));
+            allLogEntries.push(...entriesWithDate);
           }
 
           // Load tasks
