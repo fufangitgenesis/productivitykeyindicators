@@ -31,7 +31,10 @@ export function WeeklyTimetable({ logEntries, selectedWeek, onWeekChange }: Week
     // Process log entries into time blocks
     const blocks: TimeBlock[] = [];
     
-    logEntries.forEach(entry => {
+logEntries.forEach(entry => {
+      // Ensure the entry has a date before processing
+      if (!entry.date) return;
+
       // Parse start time to get hour
       const [startHour, startMinute] = entry.startTime.split(':').map(Number);
       const startHourDecimal = startHour + startMinute / 60;
@@ -40,7 +43,7 @@ export function WeeklyTimetable({ logEntries, selectedWeek, onWeekChange }: Week
         entry,
         startHour: startHourDecimal,
         duration: entry.duration,
-        date: entry.startTime.split('T')[0] || format(new Date(), 'yyyy-MM-dd')
+        date: entry.date // Use the reliable 'date' property
       });
     });
     
